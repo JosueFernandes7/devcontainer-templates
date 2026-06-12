@@ -1,0 +1,32 @@
+{
+    "name": "Python Dev",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "features": {},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff",
+                "ms-python.debugpy",
+                "ms-vscode.makefile-tools"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.ruff": "explicit",
+                    "source.organizeImports.ruff": "explicit"
+                },
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                },
+                "python.analysis.typeCheckingMode": "basic"
+            }
+        }
+    },
+    "mounts": [
+        "source=pip-cache,target=/home/vscode/.cache/pip,type=volume"
+    ],
+    // Install ruff, pytest and necessary libs, and cache installed packages
+    "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.cache/pip; pip install ruff pytest; if [ -f requirements.txt ]; then pip install -r requirements.txt; fi; if [ -f pyproject.toml ]; then pip install -e .; fi"
+}
